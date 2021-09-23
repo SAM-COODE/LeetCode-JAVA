@@ -91,7 +91,7 @@ class Solution116 {
         }
     };
     public Node connect(Node root) {
-        //广度优先
+        //深度优先
         if(root==null){
             return null;
         }
