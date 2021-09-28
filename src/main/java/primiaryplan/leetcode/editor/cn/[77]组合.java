@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
- class Solution {
+ class Solution77 {
     List<Integer> temp = new ArrayList<Integer>();
     List<List<Integer>> ans = new ArrayList<List<Integer>>();
 
