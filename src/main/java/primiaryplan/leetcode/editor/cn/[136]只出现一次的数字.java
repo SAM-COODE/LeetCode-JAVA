@@ -19,7 +19,7 @@ package primiaryplan.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution136 {
     public int singleNumber(int[] nums) {
         //知识点:任何数异或其本身=0
          int single = 0;
