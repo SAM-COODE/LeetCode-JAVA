@@ -41,8 +41,58 @@ package primiaryplan.leetcode.editor.cn;
 import java.util.*;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    private int maxCol,maxRow;
+class Solution542 {
+    static Queue<int[]> queue = new ArrayDeque<>();
+    static int maxCol,maxRow;
+    static int[][] searchedArray;
+    static List<int[]> robot = new ArrayList<>();
+    static {
+        robot.add(new int[]{0,1});
+        robot.add(new int[]{0,-1});
+        robot.add(new int[]{1,0});
+        robot.add(new int[]{-1,0});
+    }
+    public int[][] updateMatrix(int[][] mat){
+        maxCol = mat.length;
+        maxRow = mat[0].length;
+        searchedArray = new int[maxCol][maxRow];
+        //放置所有0;
+        for(int col=0;col<maxCol;++col){
+            for(int row= 0;row<maxRow;++row){
+                if(mat[col][row]==0){
+                    queue.offer(new int[]{col,row});
+                    searchedArray[col][row]=1;
+                }
+            }
+        }
+        //广度优先
+        markOne(mat);
+        return mat;
+    }
+    private void markOne(int[][] mat){
+        while(!queue.isEmpty()){
+            int[] pos = queue.poll();
+            int col = pos[0];
+            int row = pos[1];
+            for(int[] posRobot:robot){
+                int drivedCol = col+posRobot[0];
+                int drivedRow = row+posRobot[1];
+                if(drivedCol<0||drivedCol>=maxCol||drivedRow<0||drivedRow>=maxRow||searchedArray[drivedCol][drivedRow]==1){
+                    continue;
+                }
+                mat[drivedCol][drivedRow] = mat[col][row]+1;
+                queue.add(new int[]{col+posRobot[0],row+posRobot[1]});
+                searchedArray[drivedCol][drivedRow]=1;
+            }
+        }
+
+    }
+
+}
+//leetcode submit region end(Prohibit modification and deletion)
+ /* foolSolution
+ 给每一个0找1,复杂度O(n^2)
+ private int maxCol,maxRow;
     private Queue<int[]> queue = new ArrayDeque<>();
     public int[][] updateMatrix(int[][] mat) {
         //最近的0,明显是求最短路径问题,广度优先
@@ -90,5 +140,4 @@ class Solution {
         return result;
     }
 
-}
-//leetcode submit region end(Prohibit modification and deletion)
+ */
