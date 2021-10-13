@@ -50,9 +50,18 @@ package primiaryplan.leetcode.editor.cn;
 import java.util.*;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public Queue<Map<Integer,Integer>> queue =new ArrayDeque<>();
+class Solution994 {
+    private static Queue<int[]> queue =new ArrayDeque<>();
+    private static int[][] searched;
+    private static List<int[]> robots = new ArrayList<>();
+    static {
+        robots.add(new int[]{1,0});
+        robots.add(new int[]{-1,0});
+        robots.add(new int[]{0,1});
+        robots.add(new int[]{0,-1});
+    }
     public int orangesRotting(int[][] grid) {
+        int result = 0;
         /*
         广度优先
         中午吃太多了,先整理下深度优先和广度优先的总体思路再写吧
@@ -76,67 +85,53 @@ class Solution {
                     3.节点状态可能改变
                 通用解法:
                     队列
+                    //模板:入队,出队,如果需要计算层数,则需要计算每层入队数量,即每层加入的新元素数量
             进阶:本质是图的问题,既然是图,则有 无向图/有向图以及边的权重问题
          */
         //本质上是一个求最短路径的问题,找到所有的新鲜橘子位置,不太对哦
-        //加个辅助数据结构来记录新鲜橘子腐烂的分钟数?每次更新成更小的那一个?
-        //问题就来了,何时结束?没有节点被更新?-1为不会腐烂
-        //腐烂是有顺序的,按顺序更新?
-        //复杂度?
-        //十八个队列的列表
-        //先找到所有新鲜橘子?
-        //从找到的第一个新鲜橘子开始,找不到则直接返回0;
-        //好像也不用,找到离自己最近的腐烂橘子就可以了
-        List<Queue<Map<Integer,Integer>>> list = new ArrayList<>();
-        int maxCol = grid.length,maxRow = grid[0].length;
-        int[][] mark = new int[maxCol][maxRow];
-        int result =-1;
-        markAllFreshOrange(grid,list,mark);
-        refreshMark(list,grid);
-        return result;
-    }
-
-    private void refreshMark(List<Queue<Map<Integer, Integer>>> list, int[][] grid) {
-
-    }
-
-    private void markAllFreshOrange(int[][] grid,List<Queue<Map<Integer,Integer>>> list,int[][] mark) {
-        int maxCol = grid.length,maxRow = grid[0].length;
+        //定义一个无敌源点,则所有腐烂橘子到无敌源点的位置距离为1,则,首先将所有腐烂的橘子入队,依次广度,
+        //直到所有节点都被找到过一次,或腐烂橘子周围没有新鲜橘子
+        //最后查找是否还有新鲜橘子,以及最大分钟数;
+        int maxCol = grid.length;
+        int maxRow = grid[0].length;
+        searched = new int[maxCol][maxRow];
+        //所有腐烂橘子入队
         for(int col =0;col<maxCol;++col){
-            for(int row = 0;row<maxRow;++row){
-                if(grid[col][row]==1){
-                    findFirstRottedOrange(grid,col,row);
+            for(int row=0;row<maxRow;++row){
+                if(grid[col][row]==2) {
+                    queue.offer(new int[]{col, row});
+                    searched[col][row] = 1;
                 }
             }
         }
-    }
-    private void findFirstRottedOrange(int[][]grid,int col,int row){
-        int maxCol = grid.length,maxRow = grid[0].length;
-        int result = 0;
         //广度优先
-        //辅助队列
-        Map<Integer,Integer> map = new HashMap<>(1);
-        map.put(col,row);
-        queue.add(map);
-        //循环
         while(!queue.isEmpty()){
-            Map<Integer,Integer> tempMap = queue.poll();
-            int key =tempMap.keySet().iterator().next();
-            if(key<0||key>maxCol||row<0||row>maxRow){
-                return;
+            int[] temp = queue.poll();
+            int tempCol = temp[0];
+            int tempRow = temp[1];
+            for(int[] robot:robots){
+                int drivedCol = tempCol+robot[0];
+                int drivedRow = tempRow+robot[1];
+                if(drivedCol<0||drivedCol>=maxCol||drivedRow<0||drivedRow>=maxRow||searched[drivedCol][drivedRow]>0||grid[drivedCol][drivedRow]==0){
+                    continue;
+                }
+                searched[drivedCol][drivedRow]=searched[tempCol][tempRow]+1;
+                queue.offer(new int[]{drivedCol,drivedRow});
             }
-            //广度
-            //终止点
-            if(grid[key][tempMap.get(key)]==1){
-                Map<Integer,Integer> newMap = new HashMap<>(1);
-            }
-            if(grid[col][row]==2){
-                break;
-            }
-            //每层加1
-            ++result;
         }
-        return ;
+        //确定结果
+        for(int col =0;col<maxCol;++col){
+            for(int row=0;row<maxRow;++row){
+                if(searched[col][row]==0&&grid[col][row]!=0){
+                    return -1;
+                }
+                result = Math.max(searched[col][row]-1,result);
+            }
+        }
+        return  result;
     }
+
+    //todo 动态规划
+
 }
 //leetcode submit region end(Prohibit modification and deletion)

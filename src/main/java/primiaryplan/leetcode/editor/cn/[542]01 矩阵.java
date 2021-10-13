@@ -42,6 +42,7 @@ import java.util.*;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution542 {
+    //todo 动态规划
     static Queue<int[]> queue = new ArrayDeque<>();
     static int maxCol,maxRow;
     static int[][] searchedArray;
