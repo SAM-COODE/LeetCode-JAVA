@@ -35,7 +35,7 @@ package primiaryplan.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution198 {
     public int rob(int[] nums) {
         if(nums==null||nums.length== 0){
             return 0;
