@@ -50,7 +50,7 @@ package primiaryplan.leetcode.editor.cn;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution120 {
         public int minimumTotal(List<List<Integer>> triangle) {
             int n = triangle.size();
             int[][] f = new int[2][n];
