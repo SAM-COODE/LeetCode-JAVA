@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution784 {
     public List<String> letterCasePermutation(String s) {
         List<StringBuilder> ans = new ArrayList();
         ans.add(new StringBuilder());
