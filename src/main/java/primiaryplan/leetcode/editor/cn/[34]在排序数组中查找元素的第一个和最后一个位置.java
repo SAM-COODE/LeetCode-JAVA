@@ -44,7 +44,31 @@ package primiaryplan.leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public int[] searchRange34(int[] nums, int target) {
+    public int[] searchRange(int[] nums, int target) {
+        int leftIdx = binarySearch(nums, target, true);
+        int rightIdx = binarySearch(nums, target, false) - 1;
+        if (leftIdx <= rightIdx && rightIdx < nums.length && nums[leftIdx] == target && nums[rightIdx] == target) {
+            return new int[]{leftIdx, rightIdx};
+        }
+        return new int[]{-1, -1};
+    }
+
+    public int binarySearch(int[] nums, int target, boolean lower) {
+        int left = 0, right = nums.length - 1, ans = nums.length;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] > target || (lower && nums[mid] >= target)) {
+                right = mid - 1;
+                ans = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+
+    public int[] foolSearchRange(int[] nums, int target) {
         //这不就是最早出现和最后出现的结合版
         //虽然我已经忘了
         int[] result = new int[2];
@@ -69,6 +93,7 @@ class Solution {
             return new int[]{-1,-1};
         }
         result[0] = kk;
+        //然后最晚
         start  = kk;
         end = length-1;
         while(start<=end){
