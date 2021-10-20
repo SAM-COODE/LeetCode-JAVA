@@ -44,41 +44,45 @@ package primiaryplan.leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public int[] searchRange(int[] nums, int target) {
+    public int[] searchRange34(int[] nums, int target) {
         //这不就是最早出现和最后出现的结合版
         //虽然我已经忘了
         int[] result = new int[2];
         int start = 0;
         int length = nums.length;
-        int end = length-1;
-        int firstMiddle =-1;
-        int middle =0;
-        while(start<=end){
-            middle = start-(start/2-end/2);
-            if(nums[middle]<target){
-                start=middle+1;
-            }else {
-                if(nums[middle]==target&&firstMiddle==-1){
-                    firstMiddle = middle;
+        int end = length - 1;
+        int middle;
+        int kk =-1;
+        //先查最早;
+        while (start <= end) {
+            middle = start - (start - end) / 2;
+            if (nums[middle] < target) {
+                start = middle + 1;
+            } else {
+                if(nums[middle]==target) {
+                    kk = middle;
                 }
-                end = middle-1;
+                end = middle - 1;
             }
         }
-        if(firstMiddle==-1){
+        if (kk == -1) {
             return new int[]{-1,-1};
         }
-        result[0] = middle;
-        start = firstMiddle;
+        result[0] = kk;
+        start  = kk;
         end = length-1;
         while(start<=end){
-            middle = start-(start/2-end/2);
-            if(nums[middle]>target){
-                end=middle-1;
-            }else {
-                start = middle+1;
+            middle = start - (start - end) / 2;
+            if (nums[middle] <= target) {
+                start = middle + 1;
+                if(nums[middle]==target) {
+                    kk = middle;
+                }
+            } else {
+                end = middle - 1;
             }
         }
-        result[1] = nums[middle]==target?middle:middle-1;
+        result[1]=kk;
         return result;
     }
 }
