@@ -43,7 +43,7 @@ package primiaryplan.leetcode.editor.cn;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution34 {
     public int[] searchRange(int[] nums, int target) {
         int leftIdx = binarySearch(nums, target, true);
         int rightIdx = binarySearch(nums, target, false) - 1;
