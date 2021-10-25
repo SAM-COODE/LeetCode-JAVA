@@ -50,31 +50,37 @@ class Solution {
 //         ListNode(int val) { this.val = val; }
 //         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 //     }
-    public ListNode deleteDuplicates(ListNode head) {
+    public static ListNode deleteDuplicates(ListNode head) {
         //如果是数组直接遍历即可,单向链表需要将所有相同节点全部删除的话,因为不能回退,需要双指针
         //双指针,起点相同,移动右节点直至不同,如果有相同节点,则删除左节点后将左节点移动至右节点相同位置
+        if(head==null){
+            return head;
+        }
         ListNode newHead = new ListNode(0,head);
         ListNode leftLast = newHead;
         ListNode left = head;
         ListNode right = head.next;
         boolean isSame = false;
-        while(right!=null&&right.next!=null){
+        while(right!=null){
             if(right.val==left.val){
                 isSame = true;
                 deleteListNode(right,left);
             } else if(isSame){
                 isSame = false;
-                deleteListNode(left,leftLast);
-                left = left.next;
+                leftLast.next = right;
+                left = right;
             }else{
-                left = left.next;
                 leftLast = left;
+                left = right;
             }
             right = right.next;
         }
+        if(isSame){
+            leftLast.next = right;
+        }
         return newHead.next;
     }
-    public void deleteListNode(ListNode listNode,ListNode lastNode){
+    public static void deleteListNode(ListNode listNode,ListNode lastNode){
          lastNode.next = listNode.next;
     }
 }
