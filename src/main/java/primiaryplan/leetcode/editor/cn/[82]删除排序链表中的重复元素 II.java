@@ -43,13 +43,13 @@ package primiaryplan.leetcode.editor.cn;//存在一个按升序排列的链表�
  */
 class Solution {
 
-//     public static class ListNode {
-//         int val;
-//         ListNode next;
-//         ListNode() {}
-//         ListNode(int val) { this.val = val; }
-//         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-//     }
+     public static class ListNode {
+         int val;
+         ListNode next;
+         ListNode() {}
+         ListNode(int val) { this.val = val; }
+         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     }
     public static ListNode deleteDuplicates(ListNode head) {
         //如果是数组直接遍历即可,单向链表需要将所有相同节点全部删除的话,因为不能回退,需要双指针
         //双指针,起点相同,移动右节点直至不同,如果有相同节点,则删除左节点后将左节点移动至右节点相同位置
