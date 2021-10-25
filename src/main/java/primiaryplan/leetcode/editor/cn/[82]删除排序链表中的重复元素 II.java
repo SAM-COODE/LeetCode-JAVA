@@ -41,7 +41,7 @@ package primiaryplan.leetcode.editor.cn;//存在一个按升序排列的链表�
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
+class Solution82 {
 
      public static class ListNode {
          int val;
